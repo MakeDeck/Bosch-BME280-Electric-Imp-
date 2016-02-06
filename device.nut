@@ -24,7 +24,7 @@ class BME280 {
       static BME280_REGISTER_VERSION            = 0xD1;
       static BME280_REGISTER_SOFTRESET          = 0xE0;
 
-      static BME280_REGISTER_CAL26              = 0xE1;  // R calibration stored in 0xE1-0xF0
+      static BME280_REGISTER_CAL26              = 0xE1;  
 
       static BME280_REGISTER_CONTROLHUMID       = 0xF2;
       static BME280_REGISTER_CONTROL            = 0xF4;
@@ -48,9 +48,9 @@ class BME280 {
   		} else {
   			server.log(format("BME280 chip ID: 0x%02X", id));
   			
-  			_writeReg(BME280_REGISTER_CONTROLHUMID, 0x05); //16x oversampling
+  			_writeReg(BME280_REGISTER_CONTROLHUMID, 0x05); 
   			
-  			_writeReg(BME280_REGISTER_CONTROL, 0xB7); // 16x ovesampling, normal mode
+  			_writeReg(BME280_REGISTER_CONTROL, 0xB7); 
   		}
 	  }
 	  function readTemp() {
@@ -123,3 +123,11 @@ class BME280 {
 
 }
 
+
+
+i2c <- hardware.i2cAB;
+hardware.i2cAB.configure(CLOCK_SPEED_400_KHZ);
+
+bme280 <- BME280(i2c, 0x76);
+bme280.init();
+bme280.readTemp();
